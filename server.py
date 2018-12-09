@@ -16,9 +16,9 @@ class TCHandler(SocketServer.BaseRequestHandler):
             request = json.loads(data)
             command = request["command"]
             exitcode, stdout, stderr = self.run_command(command)
-            self.request.sendall(json.dumps({"exitcode": exitcode, "stdout": stdout, "stderr": stderr}))
+            self.request.sendall(json.dumps({"exit_code": exitcode, "stdout": stdout, "stderr": stderr}))
         except Exception as e:
-            self.request.sendall(json.dumps({"exitcode": 123, "stdout": "", "stderr": str(e)}))
+            self.request.sendall(json.dumps({"exit_code": 123, "stdout": "", "stderr": str(e)}))
 
     def run_command(self, command):
         process = Popen(command, shell=True, executable="/bin/bash", stdout=PIPE, stderr=PIPE)
